@@ -35,8 +35,9 @@
     git remote origin (URL)
     ```
 
-+ ### **원격에 pushg하기(master)**
++ ### **원격에 push하기(master)**
 
     ```
     git push -u orgin master
+    ```
     
