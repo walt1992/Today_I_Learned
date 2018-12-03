@@ -1,0 +1,39 @@
+Logger 객체를 사용해 log남기기
+
+
+
+에러가 났을 경우 프로그램을 종료시켜야 하는 경우를 고려해라 =>  throw e 
+https://wikidocs.net/229
+
+프로그램 강제 종료 :    System.exit(0);
+
+
+Spring Bean 객체로 등록되어 있는 DB Pool을 가져와 사용
+
+
+String split("\\.")  참고 https://stackoverflow.com/questions/14833008/java-string-split-with-dot
+
+
+자바 람다식 공부하기
+
+--------------------------------------------------------
+2018-11-14
+
+TreeMap
+
+foreach vs for-loop
+
+
+---------------------------------------------------------
+2018-11-16
+
+BeanPostProcessor 
+
+@plugin {
+    @target
+    @retention
+    @documented
+}
+
+
+@qualifier https://m.blog.naver.com/PostView.nhn?blogId=sksk3479&logNo=221178451242&proxyReferer=https%3A%2F%2Fwww.google.co.kr%2F
