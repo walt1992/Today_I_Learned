@@ -1,4 +1,6 @@
-# @SpringBootApplication
+#스프링부트 자동설정 이해하기 1) @SpringBootApplication
+
+>_본 글은 백기선님의 [스프링부트 개념과 활용](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8/)강좌를 수강하며 정리한 내용입니다._
 
 `@SpringBootApplication`은 Spring Boot의 자동설정, 즉 Bean객체를 등록하기 위해 설정한 어노테이션이다. 
 
