@@ -52,6 +52,6 @@ Json String이 배열의 형태로 존재할 경우 `TypeReference.class` 를 �
 
 간략하게 ObjectMapper객체의 기능을 살펴보았다. 이 이외에도 Serialize 및 Deserialize가 되는 방식을 사용자가 직접 정의할 수 있는 기능 등 유연성있게 Mapping할수 있는 기능들을 지원한다.
 
-이와 관련된 정보는 [다음](https://www.baeldung.com/jackson-object-mapper-tutorial)을 참고.
+이와 관련된 정보는 [이곳](https://www.baeldung.com/jackson-object-mapper-tutorial)을 참고.
 
-
+또한 ObjectMapper 클래스는 @jsonTypeInfo 어노테이션과 함께 활용할 때 그 활용도는 배가된다. [@JsonTypeInfo 활용하기 참고](@JsonTypeInfo.md)
