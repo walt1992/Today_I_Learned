@@ -1,4 +1,4 @@
-## 2.1 가상머신의 사용
+## **2.1 가상머신의 사용**
 
  시작하기 전에..
 
@@ -10,7 +10,7 @@
 
 
 
-### 2.1.1 깃허브 저장소 복제
+### **2.1.1 깃허브 저장소 복제**
 (git은 가상머신에 미리 설치되어 있음)
 
 ` $ git clone https://github.com/spark-in-action/first-edition`
@@ -18,7 +18,7 @@
 /home 아래에 first-edition 폴더가 생기면 완성
 
 
-### 2.1.2 자바 찾기
+### **2.1.2 자바 찾기**
 
 `$ which java`
 
@@ -38,7 +38,7 @@
     spark@spark-in-action:~$ echo $JAVA_HOME
     /usr/lib/jvm/java-8-openjdk-amd64/jre
 
-### 2.1.3 가상머신에 설치된 하둡 사용
+### **2.1.3 가상머신에 설치된 하둡 사용**
 
 HDFS의 파일을 읽고 쓰거나 YARN을 실행하기 위해서는 하둡이 필요하다. 
 
@@ -48,7 +48,7 @@ HDFS의 파일을 읽고 쓰거나 YARN을 실행하기 위해서는 하둡이 �
 
 >*HDFS 셸 명령은 
 > `hadoop fs`
->로 시작하며 하둡의 공식 문서(http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/FileSystemShell.html)에서 HDFS 명령의 전체 목록 참조 가능*
+>로 시작하며 하둡의 공식 문서(http://hadoop.apache.org/docs/current/hadoop-project-dist/hadoop-common/FileSystemShell.html) 에서 HDFS 명령의 전체 목록 참조 가능*
 
 + HDFS 데몬 프로세스 시작 - `$ /usr/local/hadoop/sbin/start-dfs.sh`
     
@@ -57,7 +57,7 @@ HDFS의 파일을 읽고 쓰거나 YARN을 실행하기 위해서는 하둡이 �
 + HDFS 데몬 프로세스 종료 - `$ /usr/local/hadoop/sbin/stop-dfs.sh`
 
 
-### 2.1.4 가상머신에 설치된 스파크 살펴보기 
+### **2.1.4 가상머신에 설치된 스파크 살펴보기** 
 +  스파크 심볼릭 링크 - `/opt/local/spark`
 +  실제 스파크 바이너리 - `/opt/spark-2.0.0-bin-hadoop2.7`
 
@@ -66,7 +66,7 @@ HDFS의 파일을 읽고 쓰거나 YARN을 실행하기 위해서는 하둡이 �
 
 ***
 
-## 2.2 스파크 셸로 첫 스파크 프로그램 작성
+## **2.2 스파크 셸로 첫 스파크 프로그램 작성**
 
 스파크를 사용하는 방법에는 두가지가 있다.
 
@@ -83,11 +83,11 @@ HDFS의 파일을 읽고 쓰거나 YARN을 실행하기 위해서는 하둡이 �
 > ***loop** 반복한다.*
 > 
 
-### 2.2.1 스파크 셸 시작
+### **2.2.1 스파크 셸 시작**
 
 + 스파크 셸 시작 - `$ spark-shell` 
 
-### 2.2.2 첫 스파크 코드 예제 
+### **2.2.2 첫 스파크 코드 예제** 
 
 스파크 루트 디렉토리의 LICENSE 파일중, BSD(Berkely Software Distribution)의 라이센스로 등록된 라이브러리가 몇개나 존재하는지 찾아보는 예제
 
@@ -120,13 +120,17 @@ BSD라이센스로 공개된 라이브러리 정보를 기록한 줄에는 BSD �
 
 
 
-* 각 줄별로 출력하기
+* **각 줄별로 출력하기**
 
         bsdLines.foreach(bLine => println(bLine))
 
         bsdLines.foreach(println)
 
-### 2.2.3 RDD의 개념
+### **2.2.3 RDD의 개념**
+
+>*앞으로 다룰 RDD의 내용을 보강해주는 링크를 첨부합니다.*
+>
+>*https://12bme.tistory.com/306*
 
 RDD는 스파크의 기본 추상화 객체로 다음과 같은 성질을 지닌다.
 
@@ -139,30 +143,31 @@ RDD는 스파크의 기본 추상화 객체로 다음과 같은 성질을 지닌
 
 + **복원성(resilient)** - 장애 내성
     + 스파크에 내장된 장애복구 메커니즘은 RDD에 복원성을 부여한다. 즉, 스파크는 데이터를 분산해 저장하고 있는 노드에 장애가 발생하더라도 유실된 RDD를 원래대로 복구할 수 있다. 
-    + RDD는 데이터를 중복저장하지 않는 대신, 데이터셋을 만드느 데 사용된 변환 연산자의 로그를 남기는 방식으로 장애 내성을 제공한다. 
+    + RDD는 데이터를 중복저장하지 않는 대신, 데이터셋을 만드는데 사용된 변환 연산자의 로그를 남기는 방식으로 장애 내성을 제공한다. 
   
 
 
-## 2.3 RDD의 기본 행동 연산자 및 변환 연산자
+## **2.3 RDD의 기본 행동 연산자 및 변환 연산자**
 
-RDD연산자는 크게 변환(Transformation)과 행동(Action)이라는 두개의 유형으로 나뉜다.
+RDD연산자는 크게 **변환(Transformation)** 과 **행동(Action)** 이라는 두개의 유형으로 나뉜다.
 
-+ 변환 연산자 (TranFormation)
++ **변환 연산자 (TranFormation)**
 
     RDD의 데이터를 조작해 새로운 RDD를 생성 (ex. filter, map)
 
-+ 행동 연산자 (Action)
++ **행동 연산자 (Action)**
 
     연산자를 호출한 프로그램으로 계산결과를 반환하거나 RDD 요소에 특정 작업을 수행하려고 실제 계산을 시작하는 역할 (ex. count, foreach)
   
+    
 
-### 2.3.1 map 변환 연산자
+### **2.3.1 map 변환 연산자**
 
 원본 RDD의 각 요소를 변환한 후 변환된 요소로 새로운 RDD를 생성
 
 앞서 살펴본 filter와는 달리, map함수가 호출된 RDD의 타입은 map함수가 반환하는 RDD의 타입과 같을 수도, 다를 수도 있다.
 
-+ map함수를 사용해 RDD에 포함된 각 요소의 제곱값 구하기
++ **map함수를 사용해 RDD에 포함된 각 요소의 제곱값 구하기**
 
 ```
     scala> val numbers = sc.parallelize(10 to 50 by 10)
@@ -176,7 +181,7 @@ RDD연산자는 크게 변환(Transformation)과 행동(Action)이라는 두개�
     scala> numbersSquared.foreach(println)
 ```
 
-+ 정수형타입의 RDD를 문자열타입의 RDD로 변환 후 문자열 순서 뒤집기
++ **정수형타입의 RDD를 문자열타입의 RDD로 변환 후 문자열 순서 뒤집기**
 
 ```
     scala> val reversed =  numbersSquared.map(x => x.toString.reverse)
@@ -198,17 +203,19 @@ RDD연산자는 크게 변환(Transformation)과 행동(Action)이라는 두개�
 >*기타문법 참고*
 >
 >```
+>// RDD의 첫번째 요소 리턴
 >scala> alsoReversed.first
 >res0: String = 001
->// RDD의 첫번째 요소 리턴
+>
+> // 값이 가장 큰 요소를 내림차순으로 정렬후 리턴
+> // 현 예제에서 배열의 요소 타입은 String이라는 점에 유의
 >scala> alsoReversed.top(4)
 >res1: Array[String] = Array(009, 0061, 0052, 004)
-> // 값이 가장 큰 요소를 내림차순으로 정렬후 리턴
 >```
 
-### 2.3.2 distinct와 flatMap 변환 연산자
+### **2.3.2 distinct와 flatMap 변환 연산자**
 
-+ 실습 파일 생성
++ **실습 파일 생성**
  
 ```
 $ echo "15,16,20,20
@@ -217,7 +224,7 @@ $ echo "15,16,20,20
 31,15,20" > ~/client-ids.log
 ```
 
-+ 데이터 split하기 
++ **데이터 split하기** 
 ```
 scala> val lines = sc.textFile("/home/spark/client-ids.log")
 
@@ -235,14 +242,14 @@ scala> idsStr.first
 res5: Array[String] = Array(15, 16, 20, 20)
 ```
 
-+ collect 행동연산자 활용으로 리스트 배열의 리스트 확인하기
++ **collect 행동연산자 활용으로 리스트 배열의 리스트 확인하기**
 
 ```
 scala> idsStr.collect
 ```
 collect는 새로운 배열을 생성한 후, 호출한 RDD의 모든 요소를 이 배열에 모아 리턴한다.
 
-+ flatmap을 활용해 단일배열로 분해하기
++ **flatmap을 활용해 단일배열로 분해하기**
 
 주어진 함수를 모든 RDD의 요소에 적용한다는 점에서 map과 동일하나, 익명함수가 반환한 배열의 중첩구조를 한 단계 제거하고, 모든 배열의 요소를 단일 컬렉션으로 병합한다.
 
@@ -251,7 +258,7 @@ scala> val ids = lines.flatmap(_.split(","))
 scala> ids.collect
 ```
 
-+ mkString을 활용해 배열의 요소 하나로 연결하기
++ **mkString을 활용해 배열의 요소 하나로 연결하기**
 
 `mkString`은 스칼라의 표준 라이브러리로 제공되는 Array 클래스의 메서드이다. 메서드에 전달한 인수는 연결한 문자열의 구분자로 사용된다.
 ```
@@ -259,29 +266,29 @@ scala> ids.collect.mkString(";")
 res2: String = 15;16;20;20;77;80;94;94;98;16;31;31;15;20
 // 하나의 문자열로 병합
 ```
-+ toInt로 Int타입으로 변환하기
++ **toInt로 Int타입으로 변환하기**
 
 
 ```
     scala> val intIds = ids.map(_.toInt)
 ```
 
-+ distinct로 중복값 제거하기
++ **distinct로 중복값 제거하기**
 
 ```
     scala> val uniqueIds = intIds.distinct
     scala> uniqueIds.collect
     scala> val finalCnt = uniqueIds.count
 ```
-### 2.3.3 sample, take, takeSample 연산으로 RDD의 일부 요소 가져오기
+### **2.3.3 sample, take, takeSample 연산으로 RDD의 일부 요소 가져오기**
 
-+ sample 메서드를 활용해 무작위 샘플링하기
++ **sample 메서드를 활용해 무작위 샘플링하기**
 
 
     > ***sample(withReplacement, fraction, seed)***
-    > 1) withReplacement(boolean) - 같은 요소를 여러번 샘플링 할 수 있는지 유무 지정되며 false일 경우 비복원 샘플링이 된다.
-    >2) fraction(Double) - 복원샘플링의 경우 각 요소가 샘플링될 횟수의 기대값을 의미(0 이상)하며, 비복원 샘플링의 경우 각 요소가 샘플링될 기대확률(0~1 사이의 부동소수점 숫자)을 의미한다. 주의할 점은 fraction이 반드시 해당 결과를 보장하는 것은 아니라는 점이다.
-    >3) seed(Long) - 난수생성에 사용
+    > **1) withReplacement(boolean)** - 같은 요소를 여러번 샘플링 할 수 있는지 유무 지정되며 false일 경우 비복원 샘플링이 된다.
+    >**2) fraction(Double)** - 복원샘플링의 경우 각 요소가 샘플링될 횟수의 기대값을 의미(0 이상)하며, 비복원 샘플링의 경우 각 요소가 샘플링될 기대확률(0~1 사이의 부동소수점 숫자)을 의미한다. 주의할 점은 fraction이 반드시 해당 결과를 보장하는 것은 아니라는 점이다.
+    >**3) seed(Long)** - 난수생성에 사용
 
 앞선 예제의 uniqueIds에 요소중 30%(fraction: 0.3)을 비복원 샘플링 해보자
 
@@ -300,7 +307,7 @@ res2: String = 15;16;20;20;77;80;94;94;98;16;31;31;15;20
     //res7: Array[Int] = Array(80, 80, 20, 31, 31)
 ```
 
-+ takesample을 활용해 확률값 대신 정확한 값으로 샘플링하기
++ **takesample을 활용해 확률값 대신 정확한 값으로 샘플링하기**
 
 사용법은 sample과 거의 비슷하나 두번째 인자인 `fraction`이 정수값이라는 점에서 차이가 존재한다. 즉, 요소가 샘플링될 기대확률이 아닌 샘플링하고자 하는 요소의 개수를 직접 명시한다는 점에서 차이가 존재한다. 
 
@@ -311,51 +318,47 @@ res2: String = 15;16;20;20;77;80;94;94;98;16;31;31;15;20
     take: Array[Int] = Array(15, 16, 31, 94, 77)
 ```
 
-+ take를 활용해 데이터의 하위 집합 가져오기
++ **take를 활용해 데이터의 하위 집합 가져오기**
 
 take역시 행동 연산자로서, 지정된 개수의 요소를 모들 때 까지 RDD의 파티션(클러스터의 여러 노드에 저장된 데이터의 일부분)을 하나씩 처리해 결과를 반환한다. RDD의 데이터를 살짝 엿보는 데 자주 사용되므로 잘 기억해두자.
 
-## 2.4 Double RDD 전용 함수
+## **2.4 Double RDD 전용 함수**
 
 Double 객체만으로 RDD를 구성하면 암시적변환을 사용할 수 있다. 
 
-> ***암시적변환이란?***
-> ? 모르겠음
+### **2.4.1 Double RDD 함수로 기초 통계랑 계산**
 
-
-### 2.4.1 Double RDD 함수로 기초 통계랑 계산
-
-+ mean 평균구하기
++ **mean 평균구하기**
 ```
     scala> intIds.mean
 ```
-+ sum 더하기
++ **sum 더하기**
 ```
     scala> intIds.sum
 ```    
-+ stats 기초통계량 구하기
++ **stats 기초통계량 구하기**
 ```
     scala> intIds.stats
 ```
-+ variance 분산구하기
++ **variance 분산구하기**
 ```
     scala> intIds.variance
 ```
-+ stdev 표준편차 구하기
++ **stdev 표준편차 구하기**
 ```
     scala> intIds.stdev
 ```
 
-### 2.4.2 히스토그램으로 데이터 분포 시각화
+### **2.4.2 히스토그램으로 데이터 분포 시각화**
 
-+ 설정구간에 속한 요소의 개수 반환받기
++ **설정구간에 속한 요소의 개수 반환받기**
 
 ```
-    scala> intIds.histogram(1.0 , 50.0, 100.0)
+    scala> intIds.histogram([1.0 , 50.0, 100.0])
 ```
-    배열은 오름차순 정렬되어 있어야 하며, 반드시 두개 이상의 요소로 구성되어 있어야 한다.
+배열은 오름차순 정렬되어 있어야 하며, 반드시 두개 이상의 요소로 구성되어 있어야 한다.
 
-+ 데이터의 전체 범위를 균등하게 나누기
++ **데이터의 전체 범위를 균등하게 나누기**
   
 ```
     scala> intIds.histogram(3)
@@ -366,15 +369,15 @@ Double 객체만으로 RDD를 구성하면 암시적변환을 사용할 수 있�
 
 ### 근사합계 및 평균계산
 
-  + sumApprox
-  + meanApprox
+  + **sumApprox**
+  + **meanApprox**
 
 위의 두 메서드는 지정된 제한시간동안 근사합계 또는 근사 평균을 계산한다.
 두 메서드는 동일한 파라미터를 인자로 받는데 이는 다음과 같다.
 
-1) timeout: Long - 작업이 수행되는 최대 시간을 지정한다. 만약 입력한 시간이 초과할 경우, 해당 시간까지 계산된 중간 결과를 반환한다.
-2) confidence: Double - 반환될 결과값에 영향을 준다.
+1) **timeout**: Long - 작업이 수행되는 최대 시간을 지정한다. 만약 입력한 시간이 초과할 경우, 해당 시간까지 계산된 중간 결과를 반환한다.
+2) **confidence**: Double - 반환될 결과값에 영향을 준다.
 
 두 메소드의 리턴값은 PartialResult이며 다음 두개의 필드로 구성되어 있다.
-1) finalValue - 단일결과값이 아닌, 값의 확률범위(하한 및 상한), 평균값, 신뢰 수준을 제공한다.
-2) failure - 예외가 발생했을 때만 Exception 객체를 반환한다. 
+1) **finalValue** - 단일결과값이 아닌, 값의 확률범위(하한 및 상한), 평균값, 신뢰 수준을 제공한다.
+2) **failure** - 예외가 발생했을 때만 Exception 객체를 반환한다. 

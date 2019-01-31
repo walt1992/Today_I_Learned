@@ -13,7 +13,7 @@
 
 어쨋든 설령 구현한다 할지라도 활용할지 안할지도 모를 _(물론 활용하더라도 실제 서비스에는 활용하면 절대 안되는 기능이다)_ 해당 기능을 구현하기 위해서 약 3일 동안 꽤나 고생했다. 역시...자바 공부는 소홀히하면 안된다. 
 
- 서론은 설하고, 해당 기능을 구현하기 위해서 여러가지 다른 이슈들도 존재했지만 그에 앞서 프로젝트의 ClassPath에 있는 .sql 파일을 가져와 통째로 쿼리를 실행하는 방법을 정리해본다. 
+ 서론은 각설하고, 해당 기능을 구현하기 위해서 여러가지 다른 이슈들도 존재했지만 그에 앞서 프로젝트의 ClassPath에 있는 .sql 파일을 가져와 통째로 쿼리를 실행하는 방법을 정리해본다. 
 
 ***
 
@@ -47,7 +47,7 @@
 
 위 코드에 대한 자세한 설명은 생략한다(지금은 생각하고 싶지 않아...)
 
-
+            
 
 # java에서 sql 파일 실행하기
 
@@ -113,11 +113,64 @@ $name$ LANGUAGE plpgsql;
   >저러한 옵션이 있다는 것을 알게된 것도 클래스의 내부를 들여다 봤기에 알게된 것이다. 라이브러리에서 제공하는 클래스 내부도 한번씩 들여다보는 습관을 들여야지..
 
 
-
-***
-
 뭔가 다 쓰고 보니 내가 깊게 공부한것 같지는 않다... 다만 알아보는 시간이 좀 오래걸렸을 뿐. 어찌저찌 쓰다보니 글은 이렇게 길어졌지만, 그래도 꽤나 기억에 남기고 싶은 과정들이었던지라 이렇게 열심히 써보았다.([StackOverFlow에 작성한 질문](https://stackoverflow.com/questions/53203743/how-to-execute-create-trigger-sql-in-java))
 
 이제 기능이 활용되는지에 대한 여부만 잘 기다려봐야지..
 
 아 그리고 이 외에 발생했던 다른 문제점들 즉, [Bean객체 초기화방법](../Spring/Bean객체_초기화.md)에 대한 문제와 [Bean객체 생성순서](../Spring/@DependsOn_활용하기.md)에 대한 문제도 여기 있으니 참고하시길. 
+
+
+***
+
+> 추가
+
+위의 설명은 개발환경에서만 작동하는 코드이다. 만약 프로젝트를 jar파일로 빌드하게 될 경우 위의 방법으로는 작동이 되지 않는데, 이는 jar빌드 후 기존 프로젝트 내부 디렉토리 경로만으로 파일을 불러올 수 없기 때문이다. 
+
+따라서 jar빌드 후에도 기능이 정상 작동하도록 하기 위해서는 다음과 같이 코드를 수정해야 한다. 
+
+* **jar 파일안 폴더속 파일리스트 불러오기** 
+
+만약 프로젝트를 jar파일로 빌드하게 될 경우 단순 디렉토리 경로를 통해서 파일을 불러오는 것이 불가능해진다. 이때는 클래스패스를 활용해야 하는데, 해당 내용을 반영해 다음과 같은 새로운 코드를 작성하였다.
+        
+        String UPDATE_SQL_PATH =  "/file/path";
+
+        URL res = getClass().getResource(UPDATE_SQL_PATH);
+        URI uri = res.toURI();
+        Path myPath;        
+        if(uri.getScheme().equals("jar")) { // 현재 jar빌드 된 프로젝트인 경우
+            FileSystem fileSystem = FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap());
+            myPath = fileSystem.getPath( UPDATE_SQL_PATH);
+            
+        } else {
+            myPath = Paths.get(uri);
+        }
+        
+        Stream<Path> walk = Files.walk(myPath, 1);
+        for (Iterator<Path> it = walk.iterator(); it.hasNext();){
+            System.out.println(it.next());
+
+
++ **jar파일 빌드 후 sql파일 실행가능한 코드**
+
+       private void executeSqlFile( String fileUrl) throws Exception {
+        try {
+            sess = defaultSession.getSqlSessionFactory().openSession();
+            conn = sess.getConnection();
+            ScriptRunner runner= new ScriptRunner( conn);
+            runner.setSendFullScript( true);
+            runner.setStopOnError( true);
+            is =  getClass().getResourceAsStream( fileUrl);
+            reader = new InputStreamReader( is);
+            runner.runScript( reader);
+            logger.info( "Succeed executing sql file : {}", fileUrl);
+        } catch ( RuntimeSqlException sqlExc) {
+            logger.error( "Failed executing sql file : {}", fileUrl);
+            throw sqlExc;
+        } catch ( Exception elseExc){
+            logger.error( "Failed connecting database: Session = {} , Connection = {}", sess , conn);
+            throw elseExc; 
+        } finally {
+            close();
+        }
+
+***
