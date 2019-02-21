@@ -37,3 +37,32 @@ BeanPostProcessor
 
 
 @qualifier https://m.blog.naver.com/PostView.nhn?blogId=sksk3479&logNo=221178451242&proxyReferer=https%3A%2F%2Fwww.google.co.kr%2F
+
+
+---------------------------------------------------------
+2018-11-20
+
+Junit test
+controller의 파라미터 바인딩 원리
+
+
+---------------------------------------------------------
+2018-12-06
+
+$http vs pdHttp get방식에서 parameter를 전송하는 방식이 어떻게 다른가
+
+-------------------------------------------------------------
+
+2019-01-04
+
+TypeReference
+
+ObjectMapper
+
+---------------------------------------------------------
+
+2019.02.07
+
+@EqualsAndHashCode
+
+
