@@ -39,11 +39,11 @@ jconsole과 비슷한 GUI로 확인 하는 또 다른 방법으로는 `JviaulVm`
 
 프로그램을 실행시키면 다음과 같은 화면에서 정보를 확인할 수 있다. 전반적으로 jconsole보다 깔끔한 디자인을 제공한다.
 
-![jvisualVM](/img/jvisualvm.png)
+![jvisualVM](/img/jvisualVM.png)
 
 `JviualVM`에서 Mbean을 조회하기 위해서는 별도의 플러그인을 설치해 주어야 하며 상단 탭의 Tools > Plugins에서 MBean을 검색 및 설치 후 프로그램을 재실행 하면 Mbean을 조회할수 있다.
 
-![jvisualVM](/img/jvisualvm-mbean.png)
+![jvisualVM](/img/jvisualVM-Mbean.png)
 
 
 
