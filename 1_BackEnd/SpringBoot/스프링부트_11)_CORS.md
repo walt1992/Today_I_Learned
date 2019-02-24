@@ -1,54 +1,97 @@
-# 스프링부트 ExceptionHandler
+# 스프링부트 CORS
 
 >_본 글은 백기선님의 [스프링부트 개념과 활용](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8/)강좌를 수강하며 정리한 내용입니다._
 
-특정 Exception이 발생하였을 때, 특정한 처리를 해줄 수 있는 코드를 작성할 수 있다.
+CORS란 `Cross Origin Resource Sharing`의 약자로서 `Single-Origin Policy`를 보완하기 위해 생겨난 기술이다.
 
-다음과 같은 Exception클래스가 있다고 가정하자.
+`Single-Origin Policy`는 같은 Origin에서만 리소스를 Share할 수 있다는 의미이며, CORS는 서로 다른 Origin끼리 호출할 수 있는 것을 의미한다.
 
-    public class SampleException extends RuntimeException {
-    }
+Origin이란 
 
+* URL스키마 (http, https)
+* hostname (localhost)
+* 포트 (8090, 8090 )
 
-만약 위 정의한 Exception이 발생했을 때 특정한 처리를 해주고 싶다면 다음과 같은 코드를 작성하면 된다.
+의 조합한 것을 의미한다.
 
-    @Data
-    public class AppError {
-
-    private String message;
-
-    private String reason;
-    
-    }
-
-특정 에러메시지를 담은 객체를 위와 같이 가정하여 구현하였다.
-이제 SampleException이 발생하였을 때, 특정 작업을 수행하고자 한다면 `@ExceptionHandler` 어노테이션을 활용해 다음과 같이 코드를 작성할 수 있다.      
-
-    @ExceptionHandler(SampleHandler.class)
-    public AppError sampleError(SampleHandler e){
-        AppError appError = new AppError();
-        appError.setMessage("error.app.key");
-        appError.setReason("IDK");
-        return appError;
-    }
-
-만약 위에 정의한 메소드가 특정 일반 컨트롤러 안에 정의되어 있다면 그 스코프는 해당 컨트롤러에 속한 Url의 요청에 한해 작동한다. 만약 해당 기능을 전역적으로 사용하고 싶다면 새로운 컨트롤러 생성하여 `@ControllerAdvice`어노테이션을 입력해주면 된다. 
-
-이제 /exception이라는 Url로 호출할 때, SampleException이 발생한다고 가정하면 다음과 같은 메시지가 화면에 나타날 것이다
-
-    {"message":"error.app.key","reason":"IDK"}
-
-
-위와같은 방법을 통해 특정 Exception이 발생하였을 때 특정 화면으로 전환하거나 혹은 특정 데이터를 전송해주는 등 다양한 방식으로 활용할 수 있다. 
-
+이런 하나의 Origin은 또 다른 API의 Origin을 호출할 수 없다. 스프링 부트는 이러한 한계를 보완할 수 있는 CORS기능을 별다른 설정없이 가능하도록 지원한다.
 
 ***
 
-### Error Status Code에 따라 다른 웹페이지 보여주기
+예를 들어 다음과 같은 간단한 API 서버가 있다고 가정하자.
 
-Resource/static 혹은 Resource/templates 디렉토리 아래에 error라는 디렉토리를 생성한다.
+### API Server ( port: 8090)
+    
+    @SpringBootApplication
+    @RestController
+    public class Application {
 
-이후 Error Status Code와 일치하는, 혹은 비슷한 패턴(5xx.html)의 이름을 가진 html파일을 생성해주면 해당 에러 상태 코드가 발생할 경우 해당 코드와 매핑되는 이름의 정적 리소스를 리턴해준다.
+        public static void main(String[] args) {
+            SpringApplication.run(Application.class);
+        }
+
+        @GetMapping("/hello")
+        public String hello(){
+            return "hello";
+        }
+       
+
+그리고 위의 API 서버로 요청을 보내는 새로운 클라이언트 프로젝트를 생성해 다음과 같이 http 통신을 보내본다.
+
+### Client ( port: 18090)
+
+    <body>
+    Hello this is client
+    </body>
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script>
+        $(function(){
+            $.ajax("http://localhost:8090/hello")
+                .done( (msg) =>{
+                    alert(msg);
+                })
+                .fail( () =>{
+                    alert("fail");
+                })
+        })
+    </script>
 
 
+두개의 프로젝트를 모두 실행시킨 후, Client에서 API 서버로 보낸 http Request는 당연 `Fail`이 된다.
+이는 앞서 언급했듯 하나의 Origin에서 다른 Origin을 호출하는 것은 원칙적으로 막혀있기 때문이다. 이를 해결하는 방법이 CORS이며 그 설정은 간단하다. 
 
+### CORS 설정하기 1)- @CrossOrigin
+
+`@CrossOrigin` 어노테이션을 활용해 원하는 Mapping Url 혹은 Controller에 접근을 허용하는 Origin을 설정할 수 있다.
+
+
+    @CrossOrigin(origins = "http://localhost:18090")
+    @GetMapping("/hello")
+    public String hello(){
+        return "hello";
+    }
+    
+위와같이 특정 메소드에 `@CrossOrigin`어노테이션을 설정할 경우 해당 Mapping 주소로 오는 요청에 한해서만 설정한 Origin에 접근을 허용한다.
+
+만약 전체 컨트롤러에 해당 설정을 해주고 싶다면 단순하게 어노테이션의 위치를 컨트롤러 전역에 설정해주면 된다.
+
+### CORS 설정하기 2)- 전역에 설정하기
+
+만약 특정 메소드 혹은 컨트롤러를 넘어 전역적으로 모든 요청에 대하여 접근을 허용해 주고 싶다면 다음과 같이 설정하면 된다. 
+
+* Web 설정 클래스 생성해 설정하기
+
+    @Configuration
+    public class WebConfig implements WebMvcConfigurer {
+
+        @Override
+        public void addCorsMappings(CorsRegistry registry) {
+            registry.addMapping("/**")
+                    .allowedOrigins("http://localhost:18090");
+        }
+    }
+
+`WebMvcConfigurer`는 스프링 MVC에서 제공하는 기능을 그대로 가져가면서 추가로 설정할 수 있는 인터페이스이다.
+
+이제 위와 같이 설정을 하게 되면 모든 컨트롤러에 일일이 설정할 필요 없이 글로벌하게 CORS설정을 할 수 있다. 
