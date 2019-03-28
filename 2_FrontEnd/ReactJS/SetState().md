@@ -1,4 +1,4 @@
-#SetState()가 비동기인 이유
+#SetState()
 
 리액트를 연습하던 중 다음과 같은 코드를 간단히 작성하였다.
 
@@ -63,5 +63,19 @@
         });
     }
 
+#### 추가
 
-### setState()가 
+setState()를 함에 있어 기존의 state값을 활용해야 하는 경우 나는 이전에 다음과 같이 코드를 작성하였다.
+
+    this.setState({
+        ele : this.state.ele + 1
+    })
+
+그러나 이러한 방식은 좋은 방식이 아니며 다음과 같이 작성하는 것을 추천한다.
+
+    this.setState((preState, props) => {
+        ele : preState.ele + 1
+    })
+
+이 떄, SetState()의 인자로 들어간 표현식은 updater 함수라고 불린다. updater 함수는 두개의 인자를 받는데, 첫 번째는 기존의 State이며, 두번쨰는 props이다. 
+
