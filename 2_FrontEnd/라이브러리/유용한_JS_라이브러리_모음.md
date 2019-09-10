@@ -18,3 +18,12 @@
 + ## [pagemap](https://larsjung.de/pagemap/)
 
 현재 페이지의 html구성 요소들을 지정해 미니맵의 형태로 보여준다. 화면에서 지정된 html태그의 childeNode들을 트래킹하여 미니맵을 구성하며, childNode 중에서도 원하는 태그들만 선택적으로 적용할 수 있다. 
+
++ ## [jdPDF](https://github.com/MrRio/jsPDF)
+
+PDF를 클라이언트단에서 생성해 다운로드 할 수 있는 라이브러리.
+
++ ## [Vis.js](https://visjs.org/index.html)
+
+데이터 시각화도구 라이브러리. 다양한 현태의 시각화 도구를 제공함.
+특히 소셜네트워크분석 등에 특화되어 있으며. R Studio에서도 사용중인 라이브러리.

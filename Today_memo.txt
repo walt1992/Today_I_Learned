@@ -66,3 +66,6 @@ ObjectMapper
 @EqualsAndHashCode
 
 
+---------------------------------------------------------
+
+gradle task
