@@ -1,7 +1,5 @@
 # Postgreg 연결 거부 현상
 
-
-
 ### Docker로 생성한 Postgres 컨테이너 실행하기
 
 Docker에 대해서 잘 모르지만 현재 듣고있는 인강에서 도커를 사용해 Postgres 컨테이너를 생성하였으며 그 정보는 다음과 같다. 
