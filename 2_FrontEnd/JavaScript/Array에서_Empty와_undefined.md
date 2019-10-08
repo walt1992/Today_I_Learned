@@ -42,7 +42,7 @@
 이러한 차이를 이해하고 나면 다음의 결과도 이해할 수 있다.
 
     const arr1 = new Array(10);
-    const arr2 = new Array(10).fill(10);
+    const arr2 = new Array(10).fill(undefined);
 
     arr1.forEach(i => console.log(i));  // 출력되지 않음
     arr2.forEach(i => console.log(i)); // undefined 10번 출력
