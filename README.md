@@ -1,5 +1,7 @@
 # Today I Learned (TIL) - 나의 개발 일기
 
+> 2020년 부로 Notion에 기록하고 있음. https://www.notion.so/reallifeliver/Today-I-Learned-dd14899938f3404c8d40e4ec632fbca5
+
  매일매일 새롭게 알게된 내용, 공부한 내용을 기록하는 공간
 
 
